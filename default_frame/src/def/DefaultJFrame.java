@@ -17,5 +17,6 @@ public class DefaultJFrame extends JFrame {
                 + File.separator + "default_frame"
                 + File.separator + "if_red_matreshka_big_993808.PNG").getImage();
         setIconImage(imageIcon);
+
     }
 }
