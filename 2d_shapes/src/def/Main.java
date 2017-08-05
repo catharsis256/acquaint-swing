@@ -3,6 +3,9 @@ package def;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 
 public class Main {
@@ -28,7 +31,7 @@ class ShapeDrawFrame extends JFrame {
             File.separator + "simple_window_text" + File.separator + "if_gallery_1646013.PNG";
 
     ShapeDrawFrame() throws HeadlessException {
-        setName(APP_NAME);
+        setTitle(APP_NAME);
 
         ImageIcon icon = new ImageIcon(ICON_PATH);
         setIconImage(icon.getImage());
@@ -41,6 +44,7 @@ class ShapeDrawFrame extends JFrame {
 class ShapeDrawComponent extends JComponent {
 
     private Dimension dimension;
+    private final int ELLIPSEWIDTH = 200, ELLIPSEHEIGHT = 200;
 
     public ShapeDrawComponent() {
         configure();
@@ -63,10 +67,23 @@ class ShapeDrawComponent extends JComponent {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
 
-        Ellipse2D ellipse2D = new Ellipse2D.Double();
-        ellipse2D.setFrameFromDiagonal();
+        Point2D xyA = new Point2D.Double((dimension.width - ELLIPSEWIDTH)/ 2. , (dimension.height - ELLIPSEHEIGHT)/ 2.),
+                xyB = new Point2D.Double((dimension.width + ELLIPSEWIDTH)/ 2. , (dimension.height + ELLIPSEHEIGHT)/ 2.);
 
+        Ellipse2D ellipse2D = new Ellipse2D.Double( xyA.getX(), xyA.getY() , ELLIPSEWIDTH, ELLIPSEHEIGHT);
         graphics2D.draw(ellipse2D);
+
+        Rectangle2D rect2D = new Rectangle2D.Double();
+        rect2D.setFrameFromDiagonal(xyA, xyB);
+        graphics2D.draw(rect2D);
+
+        Line2D line2D = new Line2D.Double(xyA, xyB);
+        graphics2D.draw(line2D);
+
+        Ellipse2D ellipse2DA = new Ellipse2D.Double();
+        ellipse2DA.setFrameFromDiagonal(xyA, xyB);
+
+        graphics2D.fill(ellipse2DA);
 
     }
 
